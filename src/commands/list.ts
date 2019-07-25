@@ -1,4 +1,4 @@
-import { Command, flags } from "@oclif/command";
+import { Command } from "@oclif/command";
 import axios from "axios";
 import cli from "cli-ux";
 
@@ -25,7 +25,7 @@ export default class List extends Command {
   };
 
   async run() {
-    this.parse(List);
+    const { flags } = this.parse(List);
 
     const { data: todos } = await axios.get<TodoResponse[]>(
       "https://jsonplaceholder.typicode.com/todos?userId=1"
@@ -39,7 +39,7 @@ export default class List extends Command {
           extended: true
         },
         completed: {
-          get: row => (row.completed ? "x" : " ")
+          get: row => (row.completed ? "✔️" : " ")
         },
         title: {}
       },
